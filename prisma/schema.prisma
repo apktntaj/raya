@@ -13,15 +13,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Activity {
-  id   Int      @id @default(autoincrement())
-  time DateTime
-  name String
+model Milk {
+  id         Int      @id @default(autoincrement())
+  type       MilkType
+  madeAt     DateTime
+  expiredAt  DateTime
+  madeAmount Int
+  leftAmount Int
+  amont      Int
+  desc       String?
 }
 
-model BabyCare {
-  id      Int @id @default(autoincrement())
-  tidur   Int
-  susu    Int
-  pampers Int
+enum MilkType {
+  ASI
+  SUFOR
+}
+
+model Sleep {
+  id       Int      @id @default(autoincrement())
+  startAt  DateTime
+  endAt    DateTime
+  duration Int
+  desc     String?
+}
+
+model Diaper {
+  id     Int        @id @default(autoincrement())
+  type   DiaperType
+  madeAt DateTime
+  total  Int
+  desc   String?
+}
+
+enum DiaperType {
+  PUP
+  POO
 }

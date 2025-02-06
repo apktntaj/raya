@@ -1,86 +1,105 @@
 "use client";
 
-import React, { useState } from "react";
-import { createRayaCare } from "../lib/actions";
-
-export default function Form() {
-  const [isSleep, setIsSleep] = useState<boolean>(false);
-  const [pampersUsed, setPampersUsed] = useState<number>(0);
-  const [milk, setMilk] = useState<number>(0);
-  const [milkLeft, setMilkLeft] = useState<number>(0);
-
-  const badges = [60, 90, 120, 0];
-
+export function MilkForm() {
   return (
-    <form action={createRayaCare}>
-      <div className='hidden'>
+    <form>
+      <label htmlFor='type'>
+        Jenis ASI:
+        <select name='type'>
+          <option value='ASI'>ASI</option>
+          <option value='Sufor'>Sufor</option>
+        </select>
+      </label>
+      <label htmlFor='time'>
+        Made at:
+        <input type='time' placeholder='madeAt' />
+      </label>
+      <label htmlFor='expiredAt'>
         <input
-          name='sleep'
-          type='text'
-          defaultValue={isSleep ? "Tidur" : "Bangun"}
+          type='time'
+          name='expiredAt'
+          placeholder='Susu expired'
+          disabled
         />
-        <input type='text' defaultValue={pampersUsed} />
-        <input type='text' defaultValue={milk} />
-        <input type='text' defaultValue={milkLeft} />
-      </div>
-      <div className='container mx-auto'>
-        <button
-          className='btn btn-primary btn-outline'
-          onClick={() => setIsSleep(!isSleep)}
-        >
-          {isSleep ? "Bangun" : "Tidur"}
-        </button>{" "}
-        <div className='join'>
-          <button
-            className='btn join-item btn-primary btn-outline'
-            onClick={() => setPampersUsed(pampersUsed + 1)}
-          >
-            Ganti Pampers
-          </button>
-          <button
-            className='btn join-item btn-primary btn-outline'
-            onClick={() => setPampersUsed(pampersUsed + 1)}
-          >
-            PUP
-          </button>
-        </div>
-        <div className='join'>
-          {badges.map((b, i) => (
-            <button
-              key={i}
-              className='btn join-item btn-primary btn-outline'
-              onClick={() => {
-                if (b === 0) {
-                  const userInput = prompt("Masukkan ukuran susu:");
-                  const userMilkSize = parseInt(userInput || "0", 10);
-                  if (!isNaN(userMilkSize) && userMilkSize > 0) {
-                    setMilk(milk + userMilkSize);
-                  }
-                } else {
-                  setMilk(milk + b);
-                }
-              }}
-            >
-              {b === 0 ? "Custom" : b}
-            </button>
-          ))}
-        </div>
-        <button
-          type='button'
-          className='btn btn-primary btn-outline'
-          onClick={() => {
-            const userInput = prompt("Masukkan sisa susu:");
-            const userMilkSize = parseInt(userInput?.trim() || "0", 10);
-            if (!isNaN(userMilkSize) && userMilkSize > 0) {
-              setMilkLeft(milkLeft + userMilkSize);
-            }
-          }}
-        >
-          Sisa susu
-        </button>
-      </div>
-      <button className='btn btn-link btn-accent' type='submit'>
-        Kirim
+      </label>
+      <label htmlFor='madeAmount'>
+        Jumlah susu yang dibuat:
+        <input type='number' name='madeAmount' placeholder='Milk amount' />
+      </label>
+      <label htmlFor='leftAmount'>
+        Sisa susu:
+        <input type='number' name='leftAmount' placeholder='Left amount' />
+      </label>
+      <label htmlFor='amount'>
+        Jumlah yang diminum:
+        <input type='number' name='amount' placeholder='Amount' />
+      </label>
+      <label htmlFor='desc'>
+        Deskripsi:
+        <input type='text' name='desc' placeholder='Description' />
+      </label>
+      <button className='btn btn-primary btn-outline' type='submit'>
+        Submit
+      </button>
+    </form>
+  );
+}
+
+export function SleepForm() {
+  return (
+    <form>
+      <label htmlFor='startAt'>
+        Start at:
+        <input type='time' name='startAt' placeholder='Start at' />
+      </label>
+      <label htmlFor='endAt'>
+        End at:
+        <input type='time' name='endAt' placeholder='End at' />
+      </label>
+      <label htmlFor='duration'>
+        Durasi:
+        <input
+          type='number'
+          name='duration'
+          placeholder='endAt dikurangi startAt'
+          disabled
+        />
+      </label>
+      <label htmlFor='desc'>
+        Deskripsi:
+        <input type='text' name='desc' placeholder='Description' />
+      </label>
+      <button className='btn btn-primary btn-outline' type='submit'>
+        Submit
+      </button>
+    </form>
+  );
+}
+
+export function DiapersForm() {
+  return (
+    <form>
+      <label htmlFor='type'>
+        Diganti karena:
+        <select name='type'>
+          <option value='cloth'>PUP</option>
+          <option value='disposable'>POO</option>
+        </select>
+      </label>
+      <label htmlFor='time'>
+        Waktu:
+        <input type='time' name='time' placeholder='Time' />
+      </label>
+      <label htmlFor='time'>
+        Total:
+        <input type='number' name='total' placeholder='Total' disabled />
+      </label>
+      <label htmlFor='desc'>
+        Deskripsi:
+        <input type='text' name='desc' placeholder='Description' />
+      </label>
+      <button className='btn btn-primary btn-outline' type='submit'>
+        Submit
       </button>
     </form>
   );
