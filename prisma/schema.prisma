@@ -14,38 +14,31 @@ datasource db {
 }
 
 model Milk {
-  id         Int      @id @default(autoincrement())
-  type       MilkType
-  madeAt     DateTime
-  expiredAt  DateTime
-  madeAmount Int
-  leftAmount Int
-  amont      Int
-  desc       String?
+  id     Int      @id @default(autoincrement())
+  type   String
+  madeAt DateTime @default(now())
+  qty    Int
+  left   Int      @default(0)
+  amount Int?
 }
 
-enum MilkType {
-  ASI
-  SUFOR
-}
+// model Sleep {
+//   id       Int       @id @default(autoincrement())
+//   startAt  DateTime  @default(now())
+//   endAt    DateTime?
+//   duration Int?
+//   desc     String?
+// }
 
-model Sleep {
-  id       Int      @id @default(autoincrement())
-  startAt  DateTime
-  endAt    DateTime
-  duration Int
-  desc     String?
-}
+// model Diaper {
+//   id       Int        @id @default(autoincrement())
+//   type     DiaperType
+//   changeAt DateTime   @default(now())
+//   total    Int
+//   desc     String?
+// }
 
-model Diaper {
-  id     Int        @id @default(autoincrement())
-  type   DiaperType
-  madeAt DateTime
-  total  Int
-  desc   String?
-}
-
-enum DiaperType {
-  PUP
-  POO
-}
+// enum DiaperType {
+//   PUP
+//   POO
+// }

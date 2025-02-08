@@ -1,104 +1,63 @@
 "use client";
 
-export function MilkForm() {
-  return (
-    <form>
-      <label htmlFor='type'>
-        Jenis ASI:
-        <select name='type'>
-          <option value='ASI'>ASI</option>
-          <option value='Sufor'>Sufor</option>
-        </select>
-      </label>
-      <label htmlFor='time'>
-        Made at:
-        <input type='time' placeholder='madeAt' />
-      </label>
-      <label htmlFor='expiredAt'>
-        <input
-          type='time'
-          name='expiredAt'
-          placeholder='Susu expired'
-          disabled
-        />
-      </label>
-      <label htmlFor='madeAmount'>
-        Jumlah susu yang dibuat:
-        <input type='number' name='madeAmount' placeholder='Milk amount' />
-      </label>
-      <label htmlFor='leftAmount'>
-        Sisa susu:
-        <input type='number' name='leftAmount' placeholder='Left amount' />
-      </label>
-      <label htmlFor='amount'>
-        Jumlah yang diminum:
-        <input type='number' name='amount' placeholder='Amount' />
-      </label>
-      <label htmlFor='desc'>
-        Deskripsi:
-        <input type='text' name='desc' placeholder='Description' />
-      </label>
-      <button className='btn btn-primary btn-outline' type='submit'>
-        Submit
-      </button>
-    </form>
-  );
-}
+import React, { useState } from "react";
+import { recordMilk } from "../lib/actions";
+import styles from "./form.module.css"; // Import your CSS module
 
-export function SleepForm() {
+export function MilkForm() {
+  const [milkMadeAt, setMilkMadeAt] = useState<Date>();
+
+  console.log(milkMadeAt);
   return (
-    <form>
-      <label htmlFor='startAt'>
-        Start at:
-        <input type='time' name='startAt' placeholder='Start at' />
-      </label>
-      <label htmlFor='endAt'>
-        End at:
-        <input type='time' name='endAt' placeholder='End at' />
-      </label>
-      <label htmlFor='duration'>
-        Durasi:
+    <form action={recordMilk} className={styles.form}>
+      <div className={styles.radioGroup}>
+        <div className='form-control'>
+          <label className='label cursor-pointer'>
+            <span className='label-text'>ASI</span>
+            <input
+              type='radio'
+              name='type'
+              defaultValue={"ASI"}
+              className='radio checked:bg-red-500'
+              defaultChecked
+            />
+          </label>
+        </div>
+        <div className='form-control'>
+          <label className='label cursor-pointer'>
+            <span className='label-text'>SUFOR</span>
+            <input
+              type='radio'
+              defaultValue={"SUFOR"}
+              name='type'
+              className='radio checked:bg-blue-500'
+            />
+          </label>
+        </div>
+      </div>
+      <label htmlFor='amount'>
+        Amount
         <input
           type='number'
-          name='duration'
-          placeholder='endAt dikurangi startAt'
-          disabled
+          placeholder='Type here'
+          name='amount'
+          className='input input-bordered w-full max-w-xs'
         />
       </label>
-      <label htmlFor='desc'>
-        Deskripsi:
-        <input type='text' name='desc' placeholder='Description' />
-      </label>
-      <button className='btn btn-primary btn-outline' type='submit'>
-        Submit
-      </button>
-    </form>
-  );
-}
 
-export function DiapersForm() {
-  return (
-    <form>
-      <label htmlFor='type'>
-        Diganti karena:
-        <select name='type'>
-          <option value='cloth'>PUP</option>
-          <option value='disposable'>POO</option>
-        </select>
+      <label htmlFor='madeAt'>
+        <input
+          className='hidden'
+          type='text'
+          name='madeAt'
+          defaultValue={milkMadeAt?.toLocaleString()}
+        />
       </label>
-      <label htmlFor='time'>
-        Waktu:
-        <input type='time' name='time' placeholder='Time' />
-      </label>
-      <label htmlFor='time'>
-        Total:
-        <input type='number' name='total' placeholder='Total' disabled />
-      </label>
-      <label htmlFor='desc'>
-        Deskripsi:
-        <input type='text' name='desc' placeholder='Description' />
-      </label>
-      <button className='btn btn-primary btn-outline' type='submit'>
+      <button
+        type='button'
+        className='btn btn-primary'
+        onClick={() => setMilkMadeAt(new Date())}
+      >
         Submit
       </button>
     </form>
