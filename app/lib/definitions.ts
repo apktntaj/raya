@@ -1,4 +1,8 @@
 export type Milk = {
+  id: number;
   type: string;
-  date: Date;
+  madeAt: Date;
+  qty: number;
+  left: number;
+  amount: number | null;
 };

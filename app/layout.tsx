@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter } from "./ui/fonts";
-import Navbar from "./ui/Navbar";
-import Hero from "./ui/Hero";
 
 export const metadata: Metadata = {
   title: "Raya",
@@ -15,13 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html data-theme='light' lang='en'>
       <body className={`${inter.className} antialiased`}>
-        <main>
-          <Hero />
-        </main>
-        {children}
-        <Navbar />
+        <main className='text-gray-700 container mx-auto'>{children}</main>
       </body>
     </html>
   );

@@ -1,50 +1,51 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { Milk } from "../lib/definitions";
 
-export default function Card() {
-  const temp = {
-    time: new Date(),
-    type: "ASI",
-  };
+export default function Card({ milk }: { milk: Milk }) {
+  function addHours(m: Milk) {
+    let duration: number = m.type === "ASI" ? 4 : 2;
+    const newDate = new Date(m.madeAt);
 
-  const addHours = (date: Date, hours: number) => {
-    const newDate = new Date(date);
-    newDate.setHours(newDate.getHours() + hours);
+    newDate.setHours(newDate.getHours() + duration);
     return newDate;
-  };
-
-  function dateFormatter(d: Date): string {
-    return d.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
   }
 
-  // Add 2 hours to the current time
-  const newTime = addHours(temp.time, 2);
+  function dateFormatter(d: Date): string {
+    return d
+      .toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+      .replace(/\./, ":");
+  }
+
+  const expired = useMemo(() => addHours(milk), [milk.madeAt, milk.type]);
 
   return (
-    <div className='card bg-base-100 w-96 shadow-xl'>
+    <article className='card bg-base-100 w-96 shadow-xl text-gray-600'>
       <div className='card-body'>
-        <span className='badge badge-accent'>{temp.type}</span>
+        <span className='badge badge-accent'>{milk.type}</span>
         <p>
           Made at:{" "}
           <span className='badge badge-secondary'>
-            {temp.time.toLocaleTimeString("id-ID", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {dateFormatter(milk.madeAt)}
           </span>
         </p>
         <p>
           Expired at:{" "}
           <span className='badge badge-secondary'>
-            {newTime.toLocaleTimeString("id-ID", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {dateFormatter(expired)}
           </span>
         </p>
+        <p>
+          Dibuat:{" "}
+          <span className='badge badge-secondary'>{`${milk.qty} ml`}</span>
+        </p>
+        <p>
+          Terbuang:{" "}
+          <span className='badge badge-secondary'>{`${milk.left} ml`}</span>
+        </p>
       </div>
-    </div>
+    </article>
   );
 }

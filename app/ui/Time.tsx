@@ -15,7 +15,10 @@ export default function Time() {
 
   return (
     <>
-      <time className='text-center text-6xl font-bold' suppressHydrationWarning>
+      <time
+        className='prose text-center text-6xl font-bold'
+        suppressHydrationWarning
+      >
         {time.toLocaleTimeString("id-ID").replace(/\./g, ":")}
       </time>
     </>
